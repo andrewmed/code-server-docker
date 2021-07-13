@@ -56,13 +56,13 @@ ARG USERNAME
 RUN useradd -ms /bin/bash -U -u ${UID} ${USERNAME}
 
 USER ${USERNAME}
-RUN wget https://github.com/microsoft/vscode-cpptools/releases/download/1.5.1/cpptools-linux.vsix $HOME/
+RUN wget https://github.com/microsoft/vscode-cpptools/releases/download/1.5.1/cpptools-linux.vsix -P $HOME/
 RUN mkdir $HOME/code
 
 RUN set -ex; \
     code-server --install-extension=golang.go --force; \
     code-server --install-extension=ms-python.python --force; \
-    code-server --install-extension=/tmp/cpptools-linux.vsix --force;
+    code-server --install-extension=$HOME/cpptools-linux.vsix --force;
 
 CMD code-server --auth none --disable-telemetry --disable-update-check --bind-addr 0.0.0.0:8080
 
